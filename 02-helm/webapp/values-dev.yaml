@@ -1,0 +1,14 @@
+replicaCount: 1
+
+message: "Hello from DEV - Version 0.2.0"
+
+service:
+  type: ClusterIP
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    cpu: 100m
+    memory: 64Mi

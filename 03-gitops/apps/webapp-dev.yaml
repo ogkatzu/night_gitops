@@ -1,0 +1,37 @@
+# An Argo CD "Application" = a link between a folder in Git and a namespace
+# in the cluster. Argo CD keeps the two identical, forever.
+#
+# This one is the DEV environment, on AUTO-PILOT.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webapp-dev
+  # Applications themselves live in the argocd namespace, not in dev.
+  namespace: argocd
+
+spec:
+  project: default
+
+  # ---- WHERE THE TRUTH IS (git) -------------------------------------------
+  source:
+    repoURL: https://github.com/CHANGE-ME/helm_for_night_course.git
+    targetRevision: main
+    path: 02-helm/webapp          # the Helm chart from part 2 - unchanged
+    helm:
+      releaseName: dev            # same as: helm install dev ...
+      valueFiles:
+        - values-dev.yaml         # ... -f values-dev.yaml
+
+  # ---- WHERE IT GOES (cluster) --------------------------------------------
+  destination:
+    server: https://kubernetes.default.svc   # "the cluster I'm running in"
+    namespace: dev
+
+  # ---- HOW IT SYNCS -------------------------------------------------------
+  syncPolicy:
+    automated:
+      prune: true      # deleted from git  -> deleted from the cluster
+      selfHeal: true   # changed by hand   -> changed back to what git says
+    syncOptions:
+      - CreateNamespace=true

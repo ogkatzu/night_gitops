@@ -1,0 +1,10 @@
+apiVersion: v2
+name: webapp
+description: A tiny nginx web app - Helm 101 demo chart
+type: application
+
+# version of the chart itself (bump when you change the templates)
+version: 0.2.0
+
+# version of the app inside the chart (informational)
+appVersion: "1.27"

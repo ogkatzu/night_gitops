@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-html
+  labels:
+    app: {{ .Release.Name }}
+data:
+  index.html: |
+    <h1>{{ .Values.message }}</h1>
+    <p>version: {{ .Values.image.tag }}</p>

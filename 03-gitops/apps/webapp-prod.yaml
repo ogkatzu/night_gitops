@@ -1,0 +1,31 @@
+# Same chart, same repo, different values file and namespace.
+#
+# This one is PROD, so there is NO automated sync policy: Argo CD will show
+# the change and wait for a human to press Sync. Same git, different rules.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webapp-prod
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/CHANGE-ME/helm_for_night_course.git
+    targetRevision: main
+    path: 02-helm/webapp
+    helm:
+      releaseName: prod
+      valueFiles:
+        - values-prod.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+
+  syncPolicy:
+    # no "automated:" block -> manual sync (button in the UI, or `argocd app sync`)
+    syncOptions:
+      - CreateNamespace=true

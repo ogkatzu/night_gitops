@@ -1,0 +1,10 @@
+Release "{{ .Release.Name }}" installed in namespace "{{ .Release.Namespace }}".
+
+  image:     {{ .Values.image.repository }}:{{ .Values.image.tag }}
+  replicas:  {{ .Values.replicaCount }}
+  service:   {{ .Values.service.type }}
+
+See it in a browser:
+
+  kubectl port-forward svc/{{ .Release.Name }} 8080:{{ .Values.service.port }}
+  open http://localhost:8080

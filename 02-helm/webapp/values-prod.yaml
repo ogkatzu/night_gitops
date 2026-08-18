@@ -1,0 +1,15 @@
+replicaCount: 3
+
+message: "Hello from PROD - HELM - Version 0.2.0"
+
+service:
+  type: NodePort
+  nodePort: 30081
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi

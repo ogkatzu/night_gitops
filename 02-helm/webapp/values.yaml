@@ -1,0 +1,26 @@
+# Default values. Anything here can be overridden with
+# -f my-values.yaml  or  --set key=value
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "1.27-alpine"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  # only used when service.type is NodePort
+  nodePort: 30080
+
+# the text rendered on the page
+message: "Hello from the DEFAULT values"
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    cpu: 100m
+    memory: 64Mi
