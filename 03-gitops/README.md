@@ -142,6 +142,34 @@ open http://localhost:8081
 
 **The point:** the diff in the pull request *is* the deployment.
 
+### Why the message actually changed
+
+Worth stopping on, because it bites everyone eventually. Change **only** the
+message (leave `replicaCount` alone) and push. The ConfigMap is updated... but a
+running pod would happily keep serving the old HTML, because nothing about the
+Deployment changed and Kubernetes had no reason to restart anything.
+
+The chart avoids that with one line in `templates/deployment.yaml`:
+
+```yaml
+annotations:
+  checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+```
+
+A hash of the rendered ConfigMap, stamped onto the **pod template**. ConfigMap
+changes → hash changes → pod template changes → Kubernetes rolls the pods.
+
+```bash
+kubectl get pods -n dev -o jsonpath='{.items[0].metadata.annotations.checksum/config}{"\n"}'
+```
+
+Change `replicaCount` instead and the hash stays the same — it only tracks the
+ConfigMap, so you don't get pointless restarts.
+
+**The point:** "Argo CD says Synced" means *the objects match git*, not *the
+running processes picked up the change*. Mounted config needs a restart trigger,
+and this annotation is it.
+
 ---
 
 ## 4. Demo B — self-heal (the one they'll remember)

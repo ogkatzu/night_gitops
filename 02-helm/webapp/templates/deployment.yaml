@@ -11,6 +11,12 @@ spec:
       app: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        # A hash of the rendered configmap.yaml.
+        # The ConfigMap changes -> this annotation changes -> the pod template
+        # changes -> Kubernetes rolls the pods. Without it the ConfigMap is
+        # updated but the running pods keep serving the old file.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
         app: {{ .Release.Name }}
     spec:
