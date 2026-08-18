@@ -1,6 +1,6 @@
 replicaCount: 3
 
-message: "Hello from PROD - HELM - Version 0.2.0"
+message: "Hello from PROD"
 
 service:
   type: NodePort
