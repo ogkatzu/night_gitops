@@ -13,7 +13,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/CHANGE-ME/helm_for_night_course.git
+    repoURL: https://github.com/ogkatzu/night_gitops
     targetRevision: main
     path: 02-helm/webapp
     helm:
