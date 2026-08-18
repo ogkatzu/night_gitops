@@ -1,6 +1,6 @@
 replicaCount: 3
 
-message: "Hello from DEV"
+message: "Hello from DEV - AND FROM ArgoCD"
 
 service:
   type: ClusterIP
