@@ -32,6 +32,6 @@ spec:
   syncPolicy:
     automated:
       prune: true      # deleted from git  -> deleted from the cluster
-      selfHeal: true   # changed by hand   -> changed back to what git says
+      selfHeal: false   # changed by hand   -> changed back to what git says
     syncOptions:
       - CreateNamespace=true
