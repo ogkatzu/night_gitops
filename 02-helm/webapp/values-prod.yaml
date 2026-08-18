@@ -1,4 +1,4 @@
-replicaCount: 10
+replicaCount: 3
 
 message: "Hello from PROD"
 
